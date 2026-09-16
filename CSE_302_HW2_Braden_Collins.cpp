@@ -58,12 +58,6 @@ public:
             items[length] = newItem;
         }
     }
-
-    //returns the length
-    int getLength()
-    {
-        return length;
-    }
 };
 
 //function declarations
@@ -115,5 +109,39 @@ bool matchedParentheses(string s)
 //matchedBrackets() function
 bool matchedBrackets(string s)
 {
+    ACStack list;
+
+    for(int i = 0; i < s.length(); i++)
+    {
+        if(s[i] == '(' || s[i] == '[' || s[i] == '{' || s[i] == '<')
+        {
+            list.Push(s[i]);
+        }
+        //split this if statement into multiple
+        else if(s[i] == ')' || s[i] == ']' || s[i] == '}' || s[i] == '>')
+        {
+            if(list.IsEmpty())
+            {
+                return false;
+            }
+
+            char top = list.Pop();
+
+            if(s[i] == top)
+            {
+                ;
+            }
+        }
+    }
+    if(list.IsEmpty())
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+
+
     return 0;
 }
