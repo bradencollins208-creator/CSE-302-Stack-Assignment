@@ -67,10 +67,18 @@ bool matchedBrackets(string);
 //main
 int main()
 {
+    cout << "matchedParentheses()" << endl;
     cout << matchedParentheses("(())()") << endl;
     cout << matchedParentheses("())(()") << endl;
     cout << matchedParentheses("(())") << endl;
     cout << matchedParentheses(")(") << endl;
+
+    cout << "matchedBrackets()" << endl;
+    cout << matchedBrackets("{<[]>()}") << endl;
+    cout << matchedBrackets("{<[>()]}") << endl;
+    cout << matchedBrackets("{<<[]>>({})}") << endl;
+    cout << matchedBrackets("}{][") << endl;
+
 
     return 0;
 }
@@ -86,6 +94,7 @@ bool matchedParentheses(string s)
         {
             list.Push(s[i]);
         }
+        
         else if(s[i] == ')')
         {
             if(list.IsEmpty())
@@ -96,10 +105,12 @@ bool matchedParentheses(string s)
             list.Pop();
         }
     }
+    
     if(list.IsEmpty())
     {
         return true;
     }
+    
     else
     {
         return false;
@@ -117,7 +128,7 @@ bool matchedBrackets(string s)
         {
             list.Push(s[i]);
         }
-        //split this if statement into multiple
+
         else if(s[i] == ')' || s[i] == ']' || s[i] == '}' || s[i] == '>')
         {
             if(list.IsEmpty())
@@ -125,23 +136,40 @@ bool matchedBrackets(string s)
                 return false;
             }
 
-            char top = list.Pop();
-
-            if(s[i] == top)
+            else if(list.Peek() == '(' && s[i] == ')')
             {
-                ;
+                list.Pop();
+            }
+
+            else if(list.Peek() == '[' && s[i] == ']')
+            {
+                list.Pop();
+            }
+
+            else if(list.Peek() == '{' && s[i] == '}')
+            {
+                list.Pop();
+            }
+
+            else if(list.Peek() == '<' && s[i] == '>')
+            {
+                list.Pop();
+            }
+
+            else
+            {
+                return false;
             }
         }
     }
+    
     if(list.IsEmpty())
     {
         return true;
     }
+    
     else
     {
         return false;
     }
-
-
-    return 0;
 }
